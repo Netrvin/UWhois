@@ -1,6 +1,6 @@
 <?php
 //https://github.com/Netrvin/UWhois
-//v1.0.2
+//v1.0.3
 //License under MIT
 
 // Learn some codes from regru/php-whois
@@ -51,21 +51,28 @@ class UWhois
 
     public function get($domain)
     {
-        if (!(preg_match('/^([\p{L}\d\-]+)\.((?:[\p{L}\-]+\.?)+)$/ui', $domain) || preg_match('/^(xn\-\-[\p{L}\d\-]+)\.(xn\-\-(?:[a-z\d-]+\.?1?)+)$/ui', $domain))) {
+        if (preg_match('/^([\p{L}\d\-]+)\.((?:[\p{L}\-]+\.?)+)$/ui', $domain, $matches) || preg_match('/^(xn\-\-[\p{L}\d\-]+)\.(xn\-\-(?:[a-z\d-]+\.?1?)+)$/ui', $domain, $matches)) {
+            $TLD = strtolower($matches[2]);
+        } else {
             return 'Invalid domain name';
         }
 
-        $server = $this->getWhoisServer($domain);
+        //Special TLDs
+        if (($TLD == 'int') || ($TLD == 'arpa')) {
+            $server = 'whois.iana.org';
+        } else {
+            $server = $this->getWhoisServer($domain);
+        }
 
         if ($server === -1) {
-             return 'Cannot connect to whois.iana.org:43';
-         } elseif ($server === -2) {
-             return 'No whois server for this TLD or domain';
-         }
+            return 'Cannot connect to whois.iana.org:43';
+        } elseif ($server === -2) {
+            return 'No whois server for this TLD or domain';
+        }
 
         $res = $this->getWhois($domain, $server);
         if (!$res) {
-            return 'Cannot connect to '.$domain.':43';
+            return 'Cannot connect to ' . $domain . ':43';
         } else {
             return $res;
         }
