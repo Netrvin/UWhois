@@ -1,6 +1,6 @@
 <?php
 //https://github.com/Netrvin/UWhois
-//v1.0.1
+//v1.0.2
 //License under MIT
 
 // Learn some codes from regru/php-whois
@@ -51,9 +51,7 @@ class UWhois
 
     public function get($domain)
     {
-        if (preg_match('/^([\p{L}\d\-]+)\.((?:[\p{L}\-]+\.?)+)$/ui', $domain, $matches) || preg_match('/^(xn\-\-[\p{L}\d\-]+)\.(xn\-\-(?:[a-z\d-]+\.?1?)+)$/ui', $domain, $matches)) {
-            $TLD = $matches[2];
-        } else {
+        if (!(preg_match('/^([\p{L}\d\-]+)\.((?:[\p{L}\-]+\.?)+)$/ui', $domain) || preg_match('/^(xn\-\-[\p{L}\d\-]+)\.(xn\-\-(?:[a-z\d-]+\.?1?)+)$/ui', $domain))) {
             return 'Invalid domain name';
         }
 
