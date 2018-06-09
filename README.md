@@ -1,7 +1,7 @@
 # UWhois
 It will request IANA and get the whois server of TLDs, so it can fetch whois of the latest TLDs. However, some registries do not allow you to fetch whois without permission, so you need to request authorization by yourself.
 
-##Usage
+## Usage
 ```
 include('UWhois.php');
 $Whois = new UWhois;
