@@ -1,6 +1,6 @@
 <?php
 //https://github.com/Netrvin/UWhois
-//v1.0.0
+//v1.0.1
 //License under MIT
 
 // Learn some codes from regru/php-whois
@@ -62,7 +62,7 @@ class UWhois
         if ($server === -1) {
              return 'Cannot connect to whois.iana.org:43';
          } elseif ($server === -2) {
-             return 'No whois server for this TLD';
+             return 'No whois server for this TLD or domain';
          }
 
         $res = $this->getWhois($domain, $server);
